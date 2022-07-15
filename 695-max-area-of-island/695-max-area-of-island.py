@@ -8,13 +8,11 @@ class Solution:
         maxArea = 0
         
         def dfs(x,y):
-            if (x,y) in visited:
-                return 0
             visited.add((x,y))
             area = 1
             for dx,dy in DIRS:
                 nx,ny = x+dx,y+dy
-                if inBound(nx,ny) and grid[nx][ny]==1:
+                if inBound(nx,ny) and grid[nx][ny]==1 and (nx,ny) not in visited:
                     area += dfs(nx,ny)
             return area
         
