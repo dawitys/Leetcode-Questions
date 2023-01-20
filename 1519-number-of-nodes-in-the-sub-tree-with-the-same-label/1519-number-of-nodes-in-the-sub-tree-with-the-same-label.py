@@ -5,10 +5,12 @@ class Solution:
             graph[start].append(destination)
             graph[destination].append(start)
         
-        same_label_subtrees = [1] * n
+        same_label_subtrees = [0] * n
         
         def dfs(node,parent):
-            res = defaultdict(int)
+            res = defaultdict(int) 
+            same_label_subtrees[node] += 1
+            res[labels[node]] += 1  
             for ne in graph[node]:
                 if ne != parent:
                     subtrees = dfs(ne,node)
@@ -17,7 +19,6 @@ class Solution:
                             same_label_subtrees[node] += subtrees[subtree]
                         res[subtree] += subtrees[subtree]
                  
-            res[labels[node]] += 1  
 
             return res
         
