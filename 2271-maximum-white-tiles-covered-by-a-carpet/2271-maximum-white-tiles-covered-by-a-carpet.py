@@ -1,27 +1,25 @@
 class Solution:
-    def maximumWhiteTiles(self, tiles: List[List[int]], carpetLen: int) -> int:
-        tiles.sort()
+    def maximumWhiteTiles(self, T: List[List[int]], clen: int) -> int:
+        T.sort()
+        pref = [0] + list(itertools.accumulate(r - l + 1 for l, r in T))
+        ends = [r for _, r in T]
         
-        prefix = [0] * (len(tiles) + 1)
-        for i in range(1, len(tiles) + 1):
-            prefix[i] = prefix[i - 1] + (tiles[i-1][1]-tiles[i-1][0] + 1)
+        n = len(ends)
+        j, ans = 0, 0
         
-        res = 0
-        for i in range(len(tiles)):
-            s, e = tiles[i]
-            # if the length of tile >= length of carpet, return carpetLen
-            if e >= s + carpetLen - 1:
-                return carpetLen
-            # binary search the index of the ending tile that the carpet can partially cover
-            endIdx = bisect_right(tiles, s + carpetLen - 1,key=lambda tile:tile[0]) - 1
-            # calculate the length of the ending tile that the carpet cannot cover 
-            compensate = 0
-            if tiles[endIdx][1] > s + carpetLen - 1:
-                compensate = tiles[endIdx][1] - s - carpetLen + 1
-                
-            # update the result
-            res = max(res, prefix[endIdx+1] - prefix[i] - compensate)
+        for i in range(n):
+            l, _ = T[i]                        # Carpet starts from the begining of each range
+            r = min(ends[-1], l + clen - 1)    # The rightmost index having tile is ends[-1]
+
+            while j < n and ends[j] < r:       # While the WHOLE current range is covered by carpet
+                j += 1
             
-        return res
+            # Two cases: 
+            if T[j][0] > r:    # If the right end of the carpet doesn't reach the j-th range.
+                ans = max(ans, pref[j] - pref[i])
+            else:              # If the right end of the carpet covers part of the j-th range.
+                ans = max(ans, pref[j + 1] - pref[i] - ends[j] + r)
+            
+        return ans
         
         
