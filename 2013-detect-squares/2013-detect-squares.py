@@ -2,18 +2,18 @@ class DetectSquares:
 
     def __init__(self):
         self.frequency = defaultdict(int)
-        self.points = defaultdict(Counter)
+        self.pair_points = defaultdict(set)
 
     def add(self, point: List[int]) -> None:
         x,y = point
         self.frequency[x,y] += 1
-        self.points[x][y] += 1
+        self.pair_points[x].add(y)
         
 
     def count(self, point: List[int]) -> int:
         ans = 0
         x,y = point
-        for py in self.points[x]:
+        for py in self.pair_points[x]:
             if py == y:
                 continue
             dist = abs(py-y)
