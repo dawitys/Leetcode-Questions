@@ -1,14 +1,14 @@
 class Solution:
     def minOperations(self, logs: List[str]) -> int:
-        stack = []
+        steps = 0
         
         for log in logs:
             if log == './':
                 continue
             if log == '../':
-                if stack:
-                    stack.pop()
+                if steps > 0:
+                    steps -= 1
             else:
-                stack.append(log)
+                steps += 1
                 
-        return len(stack)
+        return steps
