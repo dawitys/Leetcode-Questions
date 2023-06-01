@@ -1,21 +1,26 @@
 class Solution:
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
-        queue = deque([(0,0,1)])
-        visited = {(0,0)}
-        if grid[0][0] != 0:
+        
+        if grid[0][0] == 1 or grid[-1][-1] == 1 :
             return -1
-        n,m = len(grid), len(grid[0])
         
-        def inBound(i,j):
-            return 0 <= i < n and 0 <= j < m
+        DIRS = [[1,0],[0,1],[1,1],[-1,-1],[-1,0],[0,-1],[1,-1],[-1,1]]
         
-        while(queue):
-            ci,cj,length = queue.popleft()
-            if ci == n-1 and cj == m-1:
-                return length
-            for i,j in [[ci+1,cj],[ci,cj+1],[ci-1,cj],[ci,cj-1],[ci+1,cj+1],[ci+1,cj-1],[ci-1,cj+1],[ci-1,cj-1]]:
-                if inBound(i,j) and grid[i][j] == 0 and (i,j) not in visited:
-                    queue.append((i,j,length+1))
-                    visited.add((i,j))
+        q = deque()
+        visited = [[False for _ in range(len(grid[0]))] for _ in range(len(grid))]
         
+        q.append((0,0,1))
+        
+        def inbound(x,y):
+            return 0<=x< len(grid) and 0<=y<len(grid[0])
+        
+        while q:
+            cx,cy, d = q.popleft()
+            if cx == len(grid)-1 and cy == len(grid[0])-1:
+                return d
+            for dx, dy in DIRS:
+                nx,ny = cx + dx, cy + dy
+                if inbound(nx,ny) and grid[nx][ny] == 0 and not visited[nx][ny]:
+                    q.append((nx,ny,d+1))
+                    visited[nx][ny] = True 
         return -1
