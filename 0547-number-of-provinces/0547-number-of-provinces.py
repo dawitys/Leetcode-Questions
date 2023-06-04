@@ -18,7 +18,7 @@ class Solution:
               
         visited = set()
         provinces = 0
-        for node in range(len(isConnected)):
+        for node in graph:
             if node not in visited:
                 dfs(node,visited)
                 provinces += 1
