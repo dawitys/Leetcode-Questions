@@ -3,14 +3,18 @@ class Solution:
         n = len(isConnected)
         
         uf = [i for i in range(n)]
+        siz = [1 for i in range(n)]
         
         def find(i):
             while uf[i] != i:
                 i = uf[i]
             return i
+        
         def union(i,j):
             pi =find(i)
             pj = find(j)
+            if siz[pi] > siz[pj]:
+                pi,pj = pj,pi
             uf[pj] = uf[pi]
             
         def connected(i,j):
