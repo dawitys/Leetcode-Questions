@@ -6,9 +6,10 @@ class Solution:
         siz = [1 for i in range(n)]
         
         def find(i):
-            while uf[i] != i:
-                i = uf[i]
-            return i
+            if uf[i] == i:
+                return uf[i]
+            uf[i] = find(uf[i])
+            return uf[i]
         
         def union(i,j):
             pi =find(i)
