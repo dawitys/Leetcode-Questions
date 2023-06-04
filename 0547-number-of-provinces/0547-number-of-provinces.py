@@ -16,6 +16,7 @@ class Solution:
             if siz[pi] > siz[pj]:
                 pi,pj = pj,pi
             uf[pj] = uf[pi]
+            siz[pi] += siz[pj]
             
         def connected(i,j):
             return find(i) == find(j)
