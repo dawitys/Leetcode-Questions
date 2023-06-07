@@ -1,14 +1,11 @@
 class Solution:
     def minFlips(self, a: int, b: int, c: int) -> int:
         count = 0
-        print(bin(a),bin(b),bin(c))
         
         for i in range(32):
-            if (((a&1<<i) | (b&1<<i) == 0) and (c&1<<i != 0)) :
-                count += 1
-            elif (((a&1<<i) & (b&1<<i) != 0) and (c&1<<i == 0)): 
-                count += 2
-            elif (((a&1<<i) | (b&1<<i) != 0) and (c&1<<i == 0)) :
-                count += 1
+            if c & 1<<i:
+                count += 0 if ((a & 1<<i) | (b & 1<<i)) else 1
+            else:
+                count += (a & 1<<i != 0) + (b & 1<<i != 0)
         
         return count
