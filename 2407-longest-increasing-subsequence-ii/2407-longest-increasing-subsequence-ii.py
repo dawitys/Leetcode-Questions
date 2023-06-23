@@ -3,9 +3,6 @@ class SegTree:
     def __init__(self, arr: List[int]): 
         self.n = len(arr)
         self.tree = [0] * (2*self.n)
-        # for i in range(2*self.n-1, 0, -1): 
-        #     if i >= self.n: self.tree[i] = arr[i - self.n]
-        #     else: self.tree[i] = max(self.tree[i<<1], self.tree[i<<1|1])
 
     def query(self, lo: int, hi: int) -> int: 
         ans = 0 
