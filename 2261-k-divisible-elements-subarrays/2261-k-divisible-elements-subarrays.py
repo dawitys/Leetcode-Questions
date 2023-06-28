@@ -9,8 +9,8 @@ class Solution:
             for i in range(start, n):
                 if nums[i]%p == 0:
                     cnt+=1                 
-                temp+=str(nums[i]) + ',' # build the sequence subarray in CSV format          
-                if cnt>k: # check for termination 
+                temp+=str(nums[i]) + ','          
+                if cnt>k:
                     break
                 sub_arrays.add(temp)                                    
                 
