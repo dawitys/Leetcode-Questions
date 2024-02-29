@@ -18,8 +18,8 @@ class RandomizedSet:
         if val not in self.seen:
             return False
         cidx = self.seen[val]
+        self.seen[self.data[-1]] = cidx
         self.data[cidx],self.data[-1] = self.data[-1],self.data[cidx]
-        self.seen[self.data[cidx]] = cidx
         self.data.pop()
         del self.seen[val]
         return True
